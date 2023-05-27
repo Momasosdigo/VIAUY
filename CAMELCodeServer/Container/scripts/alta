@@ -1,0 +1,105 @@
+#!/bin/bash
+clear 
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA $1; Script error $0 \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [Codigo error $2 ]                        \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError $LINENO $?' ERR
+trap "echo [x] Que forma mas arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+
+#######################
+## ALTA DE USUARIOS ##
+#####################
+function upUser { clear
+    declare -i usUp     
+    echo -e "\e[0;36m[+]==============================================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m              \033[1;91mAlta de Usuarios            \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]==============================================[+]\e[0m\n"
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de usuario => " nameUser
+    usUp=$(cat /etc/passwd | grep -c $nameUser)
+
+    if [ "$usUp" -eq 0 ]; then
+        useradd -m $nameUser
+        passwd $nameUser
+        echo -e "\e[0;36m[+]\e[0m El usuario ""$nameUser"" ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
+        read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+        [ "$opUser_Grup" = true ] && clear
+    else
+        echo -e "\033[4;35mEl usuario especificado ya existe\e[0m"
+        echo
+        sleep 1s
+        [ "$opUser_Grup" = true ] && clear
+    fi
+}
+
+#####################
+## ALTA DE GRUPOS ##
+###################
+function upGrup () { clear
+    declare -i grUp
+    echo -e "\e[0;36m[+]==============================================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m              \033[1;91mAlta de Grupo            \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]==============================================[+]\e[0m\n"
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de grupo => " nameGrup
+    grUp=$(cat /etc/group | grep -c $nameGrup)
+
+    if [ $grUp -eq 0 ];then
+        groupadd $nameGrup
+        echo -e "\e[0;36m[+]\e[0m El grupo ""$nameUser"" ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
+        read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+        [ "$opUser_Grup" = true ] && clear
+    else
+        echo -e "\033[4;35mEl grupo especificado no ya existe\e[0m"
+        echo
+        sleep 1s
+        [ "$opUser_Grup" = true ] && clear
+    fi
+}
+
+while [ "$opUser_Grup" != 3 ]; do
+    echo -e "\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 1. Dar alta a Usuarios  \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 2. Dar alta a Grupos    \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 3. \033[0;101m\033[1;97mVolver\033[0m               \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " opUser_Grup
+    echo
+    
+    case "${opUser_Grup}" in
+        1)
+            upUser
+        ;;
+
+        2)
+            upGrup
+        ;;
+        
+        3)
+            unset "$opUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+            ( exec "./main.sh" )
+            #Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+            #Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+            #un porcentaje de procesador y ram, para usar esto es 
+            #quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+            #[ ( "./main.sh" ) ].
+            #(La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+        ;;
+        
+        *)
+            clear
+            echo
+            echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+            echo
+            sleep 2s
+            [ "${opUser_Grup}" = true ] && clear
+        ;;
+    esac
+done
