@@ -1,0 +1,109 @@
+#!/bin/bash
+clear
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA $1; Script error $0 \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [Codigo error $2 ]                        \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError $LINENO $?' ERR
+trap "echo [x] Que forma mas arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+
+#######################
+## BAJA DE USUARIOS ##
+#####################
+function downUser() {
+    declare -i usDown
+    echo -e "\e[0;36m[+]======================================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m              \033[1;91mBaja de Usuarios            \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]======================================[+]\e[0m\n"
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de usuario => " downUser
+    
+    usDown=$(cat /etc/passwd | grep -c $downUser)
+
+    if [ "$usDown" -eq 0 ]; then
+        echo -e "\033[4;35mEl usuario especificado no existe\e[0m"
+        echo
+        sleep 1s
+        [ "$opUser_Grup" = true ] && clear
+    else
+        userdel -r $downUser
+        echo -e "\e[0;36m[+]\e[0m El usuario ""$downUser"" ha sido \033[46mexitosamente\033[0m eliminaro \e[0;36m[+]\e[0m"
+        read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+        [ "$opUser_Grup" = true ] && clear
+    fi
+}
+
+
+#####################
+## BAJA DE GRUPOS ##
+###################
+function downGrup() {
+    clear 
+    declare -i grDown
+    echo -e "\e[0;36m[+]===================================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m              \033[1;91mBaja de Grupo            \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]===================================[+]\e[0m\n"
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de grupo => " downGrup
+    
+    grDown=$(cat /etc/group | grep -c $downGrup)
+
+    if [ "$grDown" -eq 0 ];then
+        echo -e "\033[4;35mEl grupo especificado no existe\e[0m"
+        echo
+        sleep 1s
+        [ "$opUser_Grup" = true ] && clear
+    else
+        groupdel $downGrup
+        echo -e "\e[0;36m[+]\e[0m El grupo ""$downGrup"" ha sido \033[46mexitosamente\033[0m eliminaro \e[0;36m[+]\e[0m"
+        read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+        [ "$opUser_Grup" = true ] && clear
+    fi
+}
+
+while [ "$opUser_Grup" != 3 ]; do
+    echo -e "\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 1. Dar baja a Usuarios  \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 2. Dar baja a Grupos    \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 3. \033[0;101m\033[1;97mVolver\033[0m               \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " opUser_Grup
+    echo
+    
+    case "${opUser_Grup}" in
+        1)
+            downUser
+        ;;
+
+        2)
+            downGrup
+        ;;
+        
+        3)
+            unset "$opUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+            ( exec "./main.sh" )
+            #Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+            #Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+            #un porcentaje de procesador y ram, para usar esto es 
+            #quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+            #[ ( "./main.sh" ) ].
+            #(La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+        ;;
+        
+        *)
+            clear
+            echo
+            echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+            echo
+            sleep 2s
+            clear
+            [ "${opUser_Grup}" = true ]
+        ;;
+    esac
+done
