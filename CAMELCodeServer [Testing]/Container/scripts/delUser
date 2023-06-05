@@ -1,0 +1,73 @@
+#!/bin/bash
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA $1; Script error $0 \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [Codigo error $2 ]                        \033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError $LINENO $?' ERR
+trap "echo [x] Que forma mas arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+
+########################
+## ELIMINAR USUARIOS ##
+######################
+function delUser() { clear
+
+    echo -e "\e[0;36m[x]===============================================[x]\e[0m"
+    echo -e "\e[0;36m[x]\e[0m  ¿Desea eliminar definitivamente un usuario?  \e[0;36m[x]\e[0m"
+    echo -e "\e[0;36m[x]===============================================[x]\e[0m"
+    read -r -p "[Yy] / [Nn] => " op
+    sleep 0.45s
+    clear
+
+    while [ "$op" ]; do
+        case "$op" in
+            [Yy]*)
+                echo -e "\e[0;36m[x]==================================[x]\e[0m"
+                echo -e "\e[0;36m[x]\e[0m         \033[1;91m\033[5m\033[3mEliminar Usuario\033[0m         \e[0;36m[x]\e[0m"
+                echo -e "\e[0;36m[x]==================================[x]\e[0m"
+                read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") Nombre de usuario => " del
+                err=0
+
+                if [ -z "$aux3" ]; then
+                    err=0
+                    echo -e "\033[4;35mEl usuario no es validos\e[0m"
+                    echo
+                    sleep 1s
+                    clear
+                    ( exec "./main.sh" )
+                else
+                    err=1
+                    sudo deluser --remove-home "$del"
+                    echo -e "\e[0;36m[+]\e[0m Se ha eliminado \033[46mexitosamente\033[0m el usuario ""$del"" \e[0;36m[+]\e[0m"
+                    read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+                    ( exec "./main.sh" ) && clear
+                fi
+            break;;
+
+            [Nn]*)
+                # Salir si se niega la instalación
+                echo
+                echo -e "[ Se ha \033[4;91mdenegado\033[0m la eliminacion ]"
+                sleep 0.45s
+                ( exec "./main.sh" ) && clear
+            ;;
+
+            *)
+                clear
+                echo
+                echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+                echo
+                sleep 2s
+                ( exec "./test.sh" ) && clear
+            break;;
+        esac
+    done
+}
+delUser
