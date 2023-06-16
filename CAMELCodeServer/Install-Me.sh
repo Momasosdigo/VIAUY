@@ -46,7 +46,7 @@ if [ ! -d "$dir" ]; then
         echo -e "\n[ El directorio se creará a continuacion... ]"
         mkdir "$dir"
         sleep 0.45s
-        cp "$scriptDir" "$homeDir/$dir/"
+        cp -r "$scriptDir" "$homeDir/$dir/"
         chmod +x "$homeDir/$dir/$scriptDir/$scriptFile"
         sleep 1s && clear
         echo -e "\n\e[0;36m\033[5m[x]======================================[x]\e[0m"
@@ -63,7 +63,7 @@ if [ ! -d "$dir" ]; then
 else
     #En caso de que exista un directorio se copiara todo en él
     echo
-    cp "$scriptDir" "$homeDir/$dir/"
+    cp -r "$scriptDir" "$homeDir/$dir/"
     chmod +x "$homeDir/$dir/$scriptDir/$scriptFile"
     sleep 1s && clear
     echo -e "\n\e[0;36m\033[5m[x]======================================[x]\e[0m"
