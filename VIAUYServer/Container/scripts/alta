@@ -45,8 +45,10 @@ function upUser() {
             read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre de usuario => ")" nameUser
             read -r -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña de usuario => ")" passUser
             read -r -p "$(echo -e "\e[0;36m[+]\e[0m Subgrupo de usuario => ")" subGroup
+
 #! Comprobar el error y cambiar el sub grupo por primario 
-            useradd -g "$subGroup" -d /home/"$nameUser" -m -s /bin/bash "$nameUser"
+            useradd -g "$subGroup" -d /home/"$nameUser" -m -s /bin/bash "$nameUser" 
+# -p "$passUser" Para que sea automático la contraseña 
 passwd "$nameUser"
             echo -e "\e[0;36m[+]\e[0m El usuario $nameUser ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
             read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
