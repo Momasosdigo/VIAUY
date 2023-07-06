@@ -1,0 +1,57 @@
+#!/bin/bash
+
+function list () { clear
+    while [ "$listUser_Grup" != 4 ]; do
+        echo -e "\n\e[0;33m\033[1m[+]========================================[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 1. Listar todos los Usuarios           \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 2. Listar todos los Grupos             \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 3. Listar filtro de usarios por Grupos \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 4. \033[0;101m\033[1;97mVolver\033[0m\t\t\t\t   \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]========================================[+]\e[0m"
+        read -r -p "=> " listUser_Grup
+        echo
+
+        case "${listUser_Grup}" in
+            1)
+                cat /etc/passwd | cut -d ":" -f1
+                read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+                [ "$listUser_Grup" = true ] && clear
+            ;;
+
+            2)
+                getent group | cut -d ":" -f1
+                read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+                [ "$listUser_Grup" = true ] && clear
+            ;;
+
+            3)
+                read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desa ver en que grupos esta => ")" watchUsers
+                getent group | grep "$watchUsers"
+                read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+                [ "$listUser_Grup" = true ] && clear
+            ;;
+
+            4)
+                unset "$listUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+                unset "$watchUsers"
+                ( exec "./main.sh" )
+                #Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+                #Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+                #un porcentaje de procesador y ram, para usar esto es 
+                #quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+                #[ ( "./main.sh" ) ].
+                #(La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+            ;;
+
+            *)
+                clear
+                echo
+                echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+                sleep 2s
+                clear && [ "${listUser_Grup}" = true ]
+            ;;
+        esac
+    done
+}
+
+list

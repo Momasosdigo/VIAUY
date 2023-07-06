@@ -1,0 +1,178 @@
+#!/bin/bash
+clear 
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\n\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA $1; Script error $0"
+    echo -e "\033[1;31m[+]\e[0m [Codigo error $2 ]"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError $LINENO $?' ERR
+trap "echo [x] Que forma mas arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+#######################
+## ALTA DE USUARIOS ##
+#####################
+function upUser() {
+    echo -e "\e[0;36m[+]===========================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m\t\033[1;91mAlta de Usuarios\t\e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]===========================[+]\e[0m\n"
+
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre de usuario => ")" nameUser
+
+    if id "$nameUser" >/dev/null 2>&1; then
+    #                 \___________________/
+    #                           |
+    # Esta línea de código verifica si un usuario existe en el sistema
+    # Redirige la salida estándar y los mensajes de error del comando id al dispositivo [ /dev/null ] 
+    # para que no se muestren en la consola. Si el comando id tiene éxito, 
+    # el bloque de código que sigue a [ then ] se ejecutará sin problemas
+
+        echo -e "\033[4;35mEl usuario especificado ya existe\e[0m"
+        read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+        clear && [ "$opUser_Grup" = true ]
+    else
+
+        echo "El usuario [ ""$nameUser"" ] no existe ¿Desea que el usuario tenga un subgrupo ya creado?"
+        read -r -p "[Yy] / [Nn] => " op
+
+        if [[ $op == [Yy] ]]; then
+            # Crea el usuario y le da un subgrupo que ya exista
+            read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre de usuario => ")" nameUser
+            read -r -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña de usuario => ")" passUser
+            read -r -p "$(echo -e "\e[0;36m[+]\e[0m Subgrupo de usuario => ")" subGroup
+            useradd -p "$passUser" -aG "$subGroup" -d /home/"$nameUser" -m -s /bin/bash "$nameUser"
+
+            echo -e "\e[0;36m[+]\e[0m El usuario $nameUser ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
+            read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+
+        if [[ $op == [Nn] ]]; then
+            # Simplemente crera el usuario sin un subgrupo
+            read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre de usuario => ")" nameUser
+            read -r -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña de usuario => ")" passUser
+            useradd -m -p "$passUser" "$nameUser"
+
+            echo -e "\e[0;36m[+]\e[0m El usuario $nameUser ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
+            read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+        fi
+
+        else
+            echo -e "\n\n\033[4;35mEl usuario especificado no existe\e[0m"
+            read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+        fi
+    fi
+}
+
+#####################
+## ALTA DE GRUPOS ##
+###################
+function upGrup() {
+    echo -e "\n\e[0;36m[+]=======================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m\033[1;91m\tAlta de Grupo\t    \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]=======================[+]\e[0m\n"
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de grupo => " nameGrup
+
+    # Verificar si el grupo ya existe
+    if grep -q -E "^$nameGrup:" /etc/group; then
+        echo -e "\033[4;35mEl grupo especificado ya existe\e[0m"
+        read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+        clear && [ "$opUser_Grup" = true ]
+    else
+        echo "El grupo [ ""$nameGrup"" ] no existe ¿Desea crear al grupo?"
+        read -r -p "[Yy] / [Nn] => " create_group
+
+        if [[ "$create_group" == [Yy] ]]; then
+            sudo groupadd "$nameGrup"
+            echo -e "\e[0;36m[+]\e[0m El grupo [ ""$nameGrup"" ] ha sido \033[46mexitosamente\033[0m creado \e[0;36m[+]\e[0m"
+            read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+
+        elif [[ "$create_group" == [Nn] ]]; then
+            echo -e "\e[0;36m[+]\e[0m El grupo [ ""$nameGrup"" ] ha sido \033[46mexitosamente\033[0m denegado :D \e[0;36m[+]\e[0m"
+            clear && [ "$opUser_Grup" = true ]
+        fi
+    fi
+
+    echo "¿Desea agregar algun usuario existente al grupo [ ""$nameGrup"" ]? "
+    read -r -p "[Yy] / [Nn] => " add_users
+
+    if [[ "$add_users" == [Yy] ]]; then
+    #    \____________________/
+    #              |
+    # Se valida la desicion del usuario y en caso de ser aceptado 
+    # continuara, la no utilizacion de una negacion ( [Nn] ) se remplaza
+    # por el [ else ] el cual cumple el rol de negacion haciendo mas facil
+    # el trabajo.
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de usuario a agregar => "  nameUser
+
+        if id "$nameUser" >/dev/null 2>&1; then
+    #                     \___________________/
+    #                               |
+    # Esta línea de código verifica si un usuario existe en el sistema
+    # Redirige la salida estándar y los mensajes de error del comando id al dispositivo [ /dev/null ] 
+    # para que no se muestren en la consola. Si el comando [ id ] tiene éxito, 
+    # el bloque de código que sigue a [ then ] se ejecutará sin problemas.
+
+            sudo usermod -aG "$nameGrup" "$nameUser"
+            echo -e "\e[0;36m[+]\e[0m El Usuario [ ""$nameUser"" ] ha sido \033[46mexitosamente\033[0m agreagdo al grupo [ ""$nameGrup"" ] \e[0;36m[+]\e[0m"
+            read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+        else
+            echo -e "\033[4;35mEl usuario especificado ya existe\e[0m"
+            read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
+            clear && [ "$opUser_Grup" = true ]
+        fi
+    fi
+}
+
+while [ "$opUser_Grup" != 3 ]; do
+    echo -e "\n\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 1. Dar alta a Usuarios  \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 2. Dar alta a Grupos    \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m|\e[0m 3. \033[0;101m\033[1;97mVolver\033[0m               \e[0;33m\033[1m|\e[0m"
+    echo -e "\e[0;33m\033[1m[+]=====================[+]\e[0m"
+    read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " opUser_Grup
+
+    case "${opUser_Grup}" in
+        1)
+            upUser
+        ;;
+
+        2)
+            upGrup
+        ;;
+
+        3)
+            unset "$opUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion.
+            unset "$nameGrup"
+            unset "$passUser"
+            unset "$subGroup"
+            unset "$nameUser"
+            ( exec "./main.sh" )
+        #   \__________________/
+        #            |
+    # Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+    # Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+    # un porcentaje de procesador y ram, para usar esto es 
+    # quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+    # [ ( "./main.sh" ) ].
+    # (La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+        ;;
+
+        *)
+            clear
+            echo
+            echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+            echo
+            sleep 2s
+            clear && [ "${opUser_Grup}" = true ]
+        ;;
+    esac
+done
