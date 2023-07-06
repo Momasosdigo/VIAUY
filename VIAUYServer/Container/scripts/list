@@ -26,7 +26,7 @@ function list () { clear
 
             3)
                 read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desa ver en que grupos esta => ")" watchUsers
-                getent group | grep "$watchUsers"
+                groups "$watchUsers"
                 read -n1 -p -r "Presione cualquier tecla para [ CONTINUAR ]..."
                 [ "$listUser_Grup" = true ] && clear
             ;;
