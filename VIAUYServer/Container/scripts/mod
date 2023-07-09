@@ -1,0 +1,197 @@
+#!/bin/bash 
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA $1; Script error $0"
+    echo -e "\033[1;31m[+]\e[0m [Codigo error $2 ]"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m============================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError $LINENO $?' ERR
+trap "echo [x] Que forma mas arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+################################
+## MODIFICACION DE USUARIOS ##
+#############################
+function modUser() { clear
+    echo -e "\n\e[0;36m[+]===================================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m\t\033[1;91mModificacion de Usuarios\t\e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]===================================[+]\e[0m\n"
+    echo
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de usuario a modificar => " userName
+
+    # Verificar si el usuario existe
+    if id "$userName" >/dev/null 2>&1; then
+        echo -e "\n\e[0;36m[+] El usuario existe y puede ser modificado [+]\e[0m\n"
+
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nuevo nombre de usuario (dejar en blanco para no cambiar) => ")" new_user_name
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nueva contraseña (dejar en blanco para no cambiar) => ")" new_password
+        echo
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Agregar a un grupo secundario existente (dejar en blanco para no cambiar) => ")" secondary_group
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Agregar a un grupo principal existente (dejar en blanco para no cambiar) => ")" primary_group
+        echo
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Dar de baja de un grupo secundario existente (dejar en blanco para no cambiar) => ")" delete_secondary_group
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Dar de baja de un grupo principal existente (dejar en blanco para no cambiar) => ")" delete_primary_group
+
+        # Modificar el nombre de usuario si se proporciona uno nuevo
+        if [ -n "$new_user_name" ]; then
+            sudo usermod -l "$new_user_name" "$userName" && echo -e "\e[0;36m[+]\e[0m El nombre del usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m modificada \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo modificar\033[0m al usuario [ ""$userName"" ]\e[0;36m[+]\e[0m\n"
+        fi
+
+        # Modificar la contraseña si se proporciona una nueva
+        if [ -n "$new_password" ]; then
+            sudo passwd "$userName" <<< "$new_password" && echo -e "\e[0;36m[+]\e[0m La contraseña del usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m modificada \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo modificar\033[0m al usuario [ ""$userName"" ]\e[0;36m[+]\e[0m\n"
+        #               \____________________________/
+        #                            |
+        # Si se proporciona una nueva contraseña, utiliza el comando 
+        # [ "$userName" <<< "$new_password" ] para modificar
+        # la contraseña actual del usuario 
+        fi
+
+        # Agregar a un grupo secundario existente si se proporciona
+        if [ -n "$secondary_group" ]; then
+            sudo usermod -aG "$secondary_group" "$userName" && echo -e "\e[0;36m[+]\e[0m El usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo secundario [ ""$secondary_group"" ] \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[1;91m No se ha podido agregar\033[0m al usuario [ ""$userName"" ] al grupo secundario [ ""$secondary_group"" ] \e[0;36m[+]\e[0m"
+        fi
+
+        # Agregar a un grupo principal existente si se proporciona
+        if [ -n "$primary_group" ]; then
+            sudo usermod -g "$primary_group" "$userName"
+            echo -e "\e[0;36m[+]\e[0m El usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo primario [ ""$primary_group"" ] \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[1;91m No se ha podido agregar\033[0m al usuario [ ""$userName"" ] al grupo primario [ ""$primary_group"" ] \e[0;36m[+]\e[0m"
+        fi
+
+        # Dar de baja de un grupo secundario existente si se proporciona
+        if [ -n "$delete_secondary_group" ]; then
+            sudo deluser "$userName" "$delete_secondary_group"
+            echo -e "\e[0;36m[+]\e[0m El usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m dado de baja del grupo secundario [ ""$delete_secondary_group"" ] \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[1;91mNo se ha podido eliminar\033[0m al usuario [ ""$userName"" ] del grupo secundario [ ""$delete_secondary_group"" ] \e[0;36m[+]\e[0m"
+        fi
+
+        # Dar de baja de un grupo principal existente si se proporciona
+        if [ -n "$delete_primary_group" ]; then
+            sudo deluser "$userName" "$delete_primary_group"
+            echo -e "\e[0;36m[+]\e[0m El usuario [ ""$userName"" ] ha sido \033[0;92mexitosamente\033[0m dado de baja del grupo principal [ ""$delete_primary_group"" ] \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[1;91mNo se ha podido eliminar\033[0m al usuario [ ""$userName"" ] del grupo principal [ ""$delete_primary_group"" ] \e[0;36m[+]\e[0m"
+        fi
+    else
+        echo -e "\n\n\033[4;35mEl usuario especificado no existe\e[0m"
+        read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+        clear
+        return
+    fi
+}
+
+#############################
+## MODIFICACION DE GRUPOS ##
+###########################
+function modGroup() { clear
+    echo -e "\n\e[0;36m[+]===========================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m     \033[1;91mModificacion de Grupos\t\e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]===========================[+]\e[0m\n"
+    echo
+    read -r -p "$(echo -e "\e[0;36m[+]\e[0m") Nombre de grupo a modificar => " groupName
+
+    # Verificar si el grupo existe
+    if grep -q -E "^$groupName:" /etc/group; then
+        echo -e "\n\e[0;36m[+] El grupo existe y puede ser modificado [+]\e[0m\n"
+
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nuevo nombre del grupo (dejar en blanco para no cambiar) => ")" new_groupName
+        echo
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Agregar usuarios al grupo primario (separados por espacios en caso de ser mas) => ")" add_users_primary_group
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Agregar usuarios al grupo secundario (separados por espacios en caso de ser mas) => ")" add_users_second_group
+        echo
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Eliminar usuarios del grupo primario (separados por espacios en caso de ser mas) => ")" remove_users_primary_group
+        read -r -p "$(echo -e "\e[0;36m[+]\e[0m Eliminar usuarios del grupo secundario (separados por espacios en caso de ser mas) => ")" remove_users_second_group
+
+        # Modificar el nombre del grupo si se proporciona uno nuevo
+        if [ -n "$new_groupName" ]; then
+            sudo groupmod -n "$new_groupName" "$groupName"
+            echo -e "\e[0;36m[+]\e[0m El nombre del grupo [ ""$groupName"" ] ha sido \033[0;92mexitosamente\033[0m modificada \e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo modificar\033[0m el nombre del grupo [ ""$groupName"" ]\e[0;36m[+]\e[0m\n"
+        fi
+
+        # Agregar usuarios al grupo primario si se proporcionan
+        if [ -n "$add_users_primary_group" ]; then
+            for user in $add_users_primary_group; do
+                sudo usermod -ag "$groupName" "$user"
+                echo -e "\e[0;36m[+]\e[0m El usuarios [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo [ ""$groupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$groupName"" ] al grupo [ ""$groupName"" ]\e[0;36m[+]\e[0m\n"
+            done
+        fi
+
+        # Agregar usuarios al grupo secundario si se proporcionan
+        if [ -n "$add_users_second_group" ]; then
+            for user in $add_users_second_group; do
+                sudo usermod -aG "$groupName" "$user"
+                echo -e "\e[0;36m[+]\e[0m El usuarios [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo [ ""$groupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$groupName"" ] al grupo [ ""$groupName"" ]\e[0;36m[+]\e[0m\n"
+            done
+        fi
+
+        # Eliminar usuarios del grupo primario si se proporcionan
+        if [ -n "$remove_users_primary_group" ]; then
+            for user in $remove_users_primary_group; do
+                sudo deluser "$user" "$groupName"
+                echo -e "\e[0;36m[+]\e[0m El usuario [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m removido del grupo primario [ ""$groupName"" ]\e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo remover\033[0m al usuario [ ""$groupName"" ] del grupo primario [ ""$groupName"" ]\e[0;36m[+]\e[0m\n"
+            done
+        fi
+
+        # Eliminar usuarios del grupo secundario si se proporcionan
+        if [ -n "$remove_users_second_group" ]; then
+            for user in $remove_users_second_group; do
+                sudo deluser "$user" "$groupName"
+                echo -e "\e[0;36m[+]\e[0m El usuario [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m removido del grupo secundario [ ""$groupName"" ]\e[0;36m[+]\e[0m" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo remover\033[0m al usuario [ ""$groupName"" ] del grupo secundario [ ""$groupName"" ]\e[0;36m[+]\e[0m\n"
+            done
+        fi
+
+
+    else
+        echo -e "\n\n\033[4;35mEl grupo especificado no existe\e[0m"
+        read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+        clear
+        return
+    fi
+}
+
+while [ "$opUser_Grup" != 3 ]; do
+    echo -e "\n\e[0;36m[+]===================[+]\e[0m"
+    echo -e "\e[0;36m|\e[0m 1. Modificar Usuarios \e[0;36m|\e[0m"
+    echo -e "\e[0;36m|\e[0m 2. Modificar Grupos   \e[0;36m|\e[0m"
+    echo -e "\e[0;36m|\e[0m 3. \033[0;101m\033[1;97mVolver\033[0m             \e[0;36m|\e[0m"
+    echo -e "\e[0;36m[+]===================[+]\e[0m"
+    read -r -p "=> " opUser_Grup
+    echo
+
+    case "${opUser_Grup}" in
+        1)
+            modUser
+        ;;
+
+        2)
+            modGroup
+        ;;
+
+        3)
+            unset "$opUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+            unset "$groupName"
+            unset "$user"
+            unset "$new_groupName"
+            unset "$add_users_primary_group"
+            unset "$add_users_second_group"
+            unset "$remove_users_primary_group"
+            unset "$remove_users_second_group"
+            ( exec "./main.sh" )
+            # Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+            # Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+            # un porcentaje de procesador y ram, para usar esto es 
+            # quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+            # [ ( "./main.sh" ) ].
+            # (La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+        ;;
+
+        *)
+            clear
+            echo
+            echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+            sleep 2s
+            clear
+        ;;
+    esac
+done
