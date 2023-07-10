@@ -9,7 +9,7 @@ al usuario crear dicho documento existe o no.
 
 # Importante 
 
-Cabe aclarar que la ejecución del código debe ser como se ha hecho hecho siempre, que es utilizado [ ./(Nombre_Script) ] evitando la necesidad de una ejecución con altos privilegios como [ bash ./(Nombre_Script) ] o forzando la ejecución con [ sido ].
+Cabe aclarar que la ejecución del código debe ser como se ha hecho hecho siempre, que es utilizado [ ./(Nombre_Script) ] evitando la necesidad de una ejecución con altos privilegios como [ bash ./(Nombre_Script) ] o forzando la ejecución con [ sudo ].
 
 # A tener en cuenta 
 Odio el trabajo en equipo
