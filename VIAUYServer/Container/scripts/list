@@ -1,0 +1,76 @@
+#!/bin/bash
+
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA ""$1""; Script error ""$0"""
+    echo -e "\033[1;31m[+]\e[0m [Codigo error ""$2"" ]"
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    exit 1
+}
+trap 'handleError ""$LINENO"" ""$?""' ERR
+trap "echo [x] Que forma más arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+function list () {
+    while [ "$listUser_Grup" != 4 ]; do
+        echo -e "\n\e[0;33m\033[1m[+]========================================[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 1. Listar todos los Usuarios           \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 2. Listar todos los Grupos             \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 3. Listar filtro de usarios por Grupos \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 4. \033[0;101m\033[1;97mVolver\033[0m\t\t\t\t   \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]========================================[+]\e[0m"
+        read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " listUser_Grup
+        echo
+
+        case "${listUser_Grup}" in
+            1)
+                echo -e "Usuarios del sitema:\n"
+                cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+            ;;
+
+            2)
+                echo -e "Grupos del sitema:\n"
+                getent group | awk -F: '$1 != "nobody" && $3 > 1000 {print $1}'
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+            ;;
+
+            3)
+                read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desa ver en que grupos esta => ")" watchUsers
+                groups "$watchUsers"
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+            ;;
+
+            4)
+                unset "$listUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+                unset "$watchUsers"
+                ( exec "./main.sh" )
+                #Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+                #Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+                #un porcentaje de procesador y ram, para usar esto es 
+                #quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+                #[ ( "./main.sh" ) ].
+                #(La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+            ;;
+
+            *)
+                clear
+                echo
+                echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
+                sleep 2s
+                clear
+            ;;
+        esac
+    done
+}
+
+list
