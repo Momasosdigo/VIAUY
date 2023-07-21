@@ -2,10 +2,10 @@
 
 Currently, the versions of the project that are constantly being updated with security and improvements are as follows:
 
-|    **Version**    |        **Supported**         |
-| ------------- | ------------------------ |
-| 2.15 - 3.x     | *Ubuntu, Xubuntu, Ubuntu MATE, Ubuntu GNOME, Rocky Linux, CentOS, Fedora* |
-| 1.03 - 2.x    | *Ubuntu, Rocky Linux, Fedora* |
+|  **Version**  |                                **Supported**                              |
+| ------------- | ------------------------------------------------------------------------- |
+| 2.15 - 3.x    | *Ubuntu, Xubuntu, Ubuntu MATE, Ubuntu GNOME, Rocky Linux, CentOS, Fedora* |
+| 1.03 - 2.x    | *Ubuntu, Rocky Linux, Fedora*                                             |
 
 ## Reporting a Vulnerability
 
