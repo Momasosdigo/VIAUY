@@ -91,7 +91,7 @@ La seguridad del servidor radica en crear un backup del mismo y de los datos imp
 ```
 Output
 
-`00 12 * * * admin /home/admin/VIAUYServer/Container/scripts/backup`
+00 12 * * * admin /home/admin/VIAUYServer/Container/scripts/backup
 ```
 
 ### Respaldos
