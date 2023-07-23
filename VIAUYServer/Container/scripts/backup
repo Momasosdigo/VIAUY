@@ -1,0 +1,76 @@
+#!/bin/bash
+
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA ""$1""; Script error ""$0""" 
+    #                           \__________________________________________/
+    #                                               /
+    #                                              /
+    #       Esta línea muestra el mensaje de error principal. El número de línea 
+    #       del error [ $1 ] y el nombre del script [ $0 ] se muestran en el mensaje de error.
+    
+    echo -e "\033[1;31m[+]\e[0m [Codigo error ""$2"" ]"
+    #                           \____________________/
+    #                                     /
+    #    Se muestra el código de error con el argumento [ $2 ] que causó el problema.
+    
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    exit  1 # Sale del script penas se detecta el error.
+}
+trap 'handleError ""$LINENO"" ""$?""' ERR
+#                 \_________________/
+#                          /  
+# Cuando el error cae en [ trap ], [ $LINENO ] representa el número de línea donde se produjo
+# el error y [ $? ] representa el código de salida del último comando ejecutado. 
+# Cuando un comando termina con éxito, [ $? ] es 0, de lo contrario, tendrá un valor 
+# diferente y se mostrara el código de error.
+
+trap "echo [x] Que forma más arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+# [ SIGINT ]: Proporciona un mensaje de advertencia cuando el usuario intenta
+# salir del script usando [ Ctrl+C ] luego finaliza el script con [ exit ].
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+function main() { clear
+    if [ ! -d "SaveData_"$(date +%d-%m-%Y)"" ]; then
+        # Crea una copia de seguridad de Shadow
+        echo -e "\n\n[\033[1;93m Respaldo de Shadow en camino...\033[0m ]"
+        sleep 1.5s
+        sudo rsync -rav /etc/shadow "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+    #        \________/
+    #            /
+    #   rsync sincronisa los datos de una carpeta a otra,
+    #   la extemcion [ -rav ] movera directorios enteros
+    #   con datros (-r) y a su ves, nos dara datos del
+    #   peso de los archivos y el porsentaje en movimiento.
+
+        # Crea una copia de seguridad de Passw
+        echo -e "\n\n[\033[1;93m Respaldo de Passwd en camino... \033[0m ]"
+        sleep 1.5s
+        sudo rsync -rav /etc/passwd "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+
+        # Crea una copia de seguridad de Group
+        echo -e "\n\n[\033[1;93m Respaldo de Group en camino... \033[0m ]"
+        sleep 1.5s
+        sudo rsync -rav /etc/group "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+
+        # Crea una copia de seguridad de BD
+        echo -e "\n\n[\033[1;93m Respaldo de Base de Datos en camino... \033[0m ]"
+        sleep 1.5s
+        mysqldump -u root -p Viauy > "$HOME"/Backup_BD_"$(date +%d-%m-%Y)".sql && echo -e "\n\n[ \033[1;32mRespaldo completado\033[0m ]" || echo -e "\n\n[ \033[4;91mOcurrio un problema\033[0m ]"
+    #   \____________________________________________________________________/
+    #                                  /        
+    #                                 /
+    #  [ mysqldump ] es el encargado de generar las copias de 
+    #  seguridad d elas base de datos viene ya junto con MySQL al instalarlo.       
+        
+        read -n1 -p "Presione cualquier tecla para [ VOLVER ]..."
+        ( exec "./main.sh" )
+    else
+        mkdir SaveData_"$(date +%d-%m-%Y)"
+    fi
+}
+
+main
