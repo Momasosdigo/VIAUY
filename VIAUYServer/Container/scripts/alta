@@ -66,7 +66,7 @@ function upUser() { clear
 
         if [[ "$nameUserChoice" =~ ^[Yy]$ ]]; then
             # Crea el usuario y le da un grupo principal que ya exista
-            read -r -s -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña de usuario => ")" passUser
+            read -r -s -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña del usuario => ")" passUser
             if [[ -z "$passUser" ]]; then
                 echo -e "\n\033[1;91mLa contraseña no puede estar vacía\e[0m"
                 read -n1 -p "Presione cualquier tecla para [ VOLVER ]..."
@@ -82,8 +82,8 @@ function upUser() { clear
             return
 
         elif [[ "$nameUserChoice" =~ ^[Nn]$ ]]; then
-            # Simplemente crera el usuario sin un grupo principal
-            read -r -s -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña de usuario => ")" passUser
+            # Simplemente creara el usuario sin un grupo principal
+            read -r -s -p "$(echo -e "\e[0;36m[+]\e[0m Contraseña del usuario => ")" passUser
                         if [[ -z "$passUser" ]]; then
                 echo -e "\n\033[1;91mLa contraseña no puede estar vacía\e[0m"
                 read -n1 -p "Presione cualquier tecla para [ VOLVER ]..."
@@ -132,7 +132,7 @@ function upGrup() { clear
         clear
         return
     else # 1
-        echo "El grupo [ ""$nameGrup"" ] no existe ¿Desea crear al grupo?"
+        echo "El grupo [ ""$nameGrup"" ] no existe ¿Desea crear el grupo?"
         read -r -p "[Yy] / [Nn] => " nameGroupChoice
 
         if [[ "$nameGroupChoice" =~ [Yy] ]]; then # 2
@@ -147,7 +147,7 @@ function upGrup() { clear
             read -r -p "[Yy] / [Nn] => " addUsersChoice
 
             if [[ "$addUsersChoice" == [Yy] ]]; then # 3
-                read -r -p "$(echo -e "\n\e[0;36m[+]\e[0m") Nombre de usuario a agregar => "  nameUser
+                read -r -p "$(echo -e "\n\e[0;36m[+]\e[0m") Nombre de usuario que desea agregar => "  nameUser
 
                 if id "$nameUser" >/dev/null 2>&1; then # 4
             #      \____________________________/
