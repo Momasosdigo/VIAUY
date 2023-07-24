@@ -123,12 +123,12 @@ function removedGroup() { clear
     # y se realiza la pregunta al usuario sobre si desea eliminar el grupo o no
 
             echo -e "\n\e[0;36m[+]\e[0m Usuarios existentes en el grupo [ ""$removedGroup"" ]: $userList"
-            echo -e "\e[0;36m[+]\e[0m ¿Desea eliminar el grupo [ ""$removedGroup"" ] y sacar a todos los usuarios del grupo?" 
+            echo -e "\e[0;36m[+]\e[0m ¿Desea eliminar el grupo [ ""$removedGroup"" ] y sacar a todos los usuarios de este?" 
             read -r -p "[Yy] / [Nn] => " deleteGroup
 
             if [[ "$deleteGroup" == [Yy] ]]; then
                 # Retirar a los usuarios del grupo
-                sudo gpasswd -d "$userList" "$removedGroup" >/dev/null 2>&1 && echo -e "\e[0;36m[+]\e[0m Se a eliminado \033[0;92mexitosamente\033[0m al usuario [ ""$userList"" ] del grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \e[0m\033[1;91mNo se pudo eliminar\033[0m al usuario [ ""$userList"" ] del grupo [ ""$removedGroup"" ]\e[0;36m[+] \e[0m\n"
+                sudo gpasswd -d "$userList" "$removedGroup" >/dev/null 2>&1 && echo -e "\e[0;36m[+]\e[0m Se ha eliminado \033[0;92mexitosamente\033[0m al usuario [ ""$userList"" ] del grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \e[0m\033[1;91mNo se pudo eliminar\033[0m al usuario [ ""$userList"" ] del grupo [ ""$removedGroup"" ]\e[0;36m[+] \e[0m\n"
                 #                                       \_____________/
                 #                                              |
                 #                                             |
@@ -138,7 +138,7 @@ function removedGroup() { clear
                 #        de error del comando en cuestión. Asi nosotros podremos personalizar
                 #        los nuestros
 
-                sudo groupdel -f "$removedGroup" && echo -e "\n\e[0;36m[+]\e[0m Se a eliminado \033[0;92mexitosamente\033[0m el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m" || echo -e "\n\e[0;36m[+]\e[0m No se ha podido eliminar el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m"
+                sudo groupdel -f "$removedGroup" && echo -e "\n\e[0;36m[+]\e[0m Se ha eliminado \033[0;92mexitosamente\033[0m el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m" || echo -e "\n\e[0;36m[+]\e[0m No se ha podido eliminar el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m"
                 read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
                 clear
                 return
@@ -146,7 +146,7 @@ function removedGroup() { clear
         else
             # No hay usuarios en el grupo, entonces eliminar el grupo directamente
             sudo groupdel -f "$removedGroup"
-            echo -e "\n\e[0;36m[+]\e[0m Se a eliminado \033[0;92mexitosamente\033[0m el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m"
+            echo -e "\n\e[0;36m[+]\e[0m Se ha eliminado \033[0;92mexitosamente\033[0m el grupo [ ""$removedGroup"" ] \e[0;36m[+]\e[0m"
             read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
             clear
             return
