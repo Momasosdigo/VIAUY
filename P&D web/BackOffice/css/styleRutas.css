@@ -1,0 +1,442 @@
+/*modal agregar*/
+.modalAgregar {
+  background: var(--modal-background);
+  backdrop-filter: var(--modal-blur);
+  position: fixed;
+  pointer-events: none;
+  height: 100vh;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  opacity: 0%;
+}
+
+.show {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modal {
+  background-color: var(--neutral-blanco);
+  width: 33.33%;
+  border-radius: 20px;
+  margin-top: 20.1vh;
+  margin-left: 33.33%;
+  position: relative;
+}
+
+.modal p {
+  text-align: center;
+  color: var(--primario-90);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-top: 6%;
+  padding-bottom: 6%;
+  margin: 0%;
+}
+
+.origenRuta {
+  margin-left: 10.4%;
+}
+
+.origenRuta label {
+  color: var(--primario-90);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.origenRuta input {
+  width: 83.3%;
+  padding: 13px 11px;
+  background-color: var(--neutral-gris-claro-1);
+  border: none;
+  color: var(--neutral-gris);
+  font-weight: 300;
+  margin-top: 3%;
+  border-radius: 7px;
+}
+
+.destinoRuta {
+  margin-left: 10.4%;
+  margin-top: 4%;
+}
+
+.destinoRuta label {
+  color: var(--primario-90);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.destinoRuta input {
+  width: 83.3%;
+  padding: 13px 11px;
+  background-color: var(--neutral-gris-claro-1);
+  border: none;
+  color: var(--neutral-gris);
+  font-weight: 300;
+  margin-top: 3%;
+  border-radius: 7px;
+}
+
+.ingresarRuta {
+  margin-left: 10.4%;
+  margin-top: 4%;
+  align-items: center;
+}
+
+.ingresarRuta label {
+  color: var(--primario-90);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btnHorario button {
+  width: 88%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--primario-90);
+  font-size: 1rem;
+  color: var(--primario-10);
+  align-items: center;
+  border: none;
+  margin-top: 2.72%;
+  cursor: pointer;
+}
+
+.btnParada button {
+  width: 88%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--primario-90);
+  font-size: 1rem;
+  color: var(--primario-10);
+  align-items: center;
+  border: none;
+  margin-top: 2.72%;
+  cursor: pointer;
+}
+
+.atrasGuardar {
+  margin-left: 10.4%;
+  margin-top: 8.18%;
+  padding-bottom: 9.1%;
+  align-items: center;
+}
+
+.modalAtras {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--neutral-gris);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  margin-right: 3.48%;
+  cursor: pointer;
+}
+
+.datosGuardar {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--primario);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  cursor: pointer;
+}
+
+.datosGuardar:hover {
+  background: var(--primario-hover);
+}
+
+/*fin modal agregar*/
+
+/*modal agregar horarios*/
+.modalAgregarHorarios {
+  background: var(--modal-background);
+  backdrop-filter: var(--modal-blur);
+  position: fixed;
+  pointer-events: none;
+  height: 100vh;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  opacity: 0%;
+}
+
+.showHorarios {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modalHorarios {
+  background-color: var(--neutral-blanco);
+  width: 33.33%;
+  border-radius: 20px;
+  margin-top: 20.1vh;
+  margin-left: 33.33%;
+  position: relative;
+}
+
+.modalHorarios p {
+  text-align: center;
+  color: var(--primario-90);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-top: 6%;
+  padding-bottom: 6%;
+  margin: 0%;
+}
+
+.ingresarHorarios {
+  margin-left: 10.4%;
+}
+
+.ingresarHorario label {
+  color: var(--primario-90);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ingresarHorario {
+  display: flex;
+  width: 88.4%;
+}
+
+.ingresarHorario input {
+  width: 87.36%;
+  padding: 7px 18px;
+  background-color: var(--neutral-gris-claro-1);
+  border: none;
+  color: var(--neutral-gris);
+  font-weight: 300;
+  margin-top: 3%;
+  margin-right: 2.63%;
+  border-radius: 7px;
+}
+
+.AgregarHorario {
+  width: 12%;
+  margin-top: 3%;
+  border-radius: 7px;
+  background-color: var(--primario-90);
+  font-size: 0.81rem;
+  color: var(--neutral-blanco);
+}
+
+.divTablaHorario {
+  width: 79.16%;
+  height: 18.3vh;
+  margin-left: 10.4%;
+  margin-top: 2.72%;
+  overflow: scroll;
+}
+
+.tablaHorarios {
+  border-collapse: collapse;
+  vertical-align: auto;
+  width: 100%;
+  text-align: center;
+  color: var(--neutral-gris-oscuro);
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.columnaPHorario {
+  width: 10%;
+}
+
+.columnaMHorario {
+  width: 77.37%;
+  text-align: start;
+  padding: 13px 11px;
+}
+
+.eliminarHorario {
+  background: none;
+  border: none;
+  color: var(--semantico-rojo);
+}
+
+.eliminarHorario:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.atrasGuardarHorario {
+  margin-left: 10.4%;
+  margin-top: 8.18%;
+  padding-bottom: 9.1%;
+  align-items: center;
+}
+
+.modalAtrasHorario {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--neutral-gris);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  margin-right: 3.48%;
+  cursor: pointer;
+}
+
+.datosGuardarHorario {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--primario);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  cursor: pointer;
+}
+
+.datosGuardarHorario:hover {
+  background: var(--primario-hover);
+}
+/*fin modal agregar parada*/
+
+/*modal agregar parada*/
+.modalAgregarParadas {
+  background: var(--modal-background);
+  backdrop-filter: var(--modal-blur);
+  position: fixed;
+  pointer-events: none;
+  height: 100vh;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  opacity: 0%;
+}
+
+.showParadas {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modalParadas {
+  background-color: var(--neutral-blanco);
+  width: 33.33%;
+  border-radius: 20px;
+  margin-top: 20.1vh;
+  margin-left: 33.33%;
+  position: relative;
+}
+
+.modalParadas p {
+  text-align: center;
+  color: var(--primario-90);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-top: 6%;
+  padding-bottom: 6%;
+  margin: 0%;
+}
+
+.ingresarParadas {
+  margin-left: 10.4%;
+}
+
+.ingresarParada label {
+  color: var(--primario-90);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ingresarParada {
+  display: flex;
+  width: 88.4%;
+}
+
+.ingresarParada input {
+  width: 87.36%;
+  padding: 7px 18px;
+  background-color: var(--neutral-gris-claro-1);
+  border: none;
+  color: var(--neutral-gris);
+  font-weight: 300;
+  margin-top: 3%;
+  margin-right: 2.63%;
+  border-radius: 7px;
+}
+
+.AgregarParada {
+  width: 12%;
+  margin-top: 3%;
+  border-radius: 7px;
+  background-color: var(--primario-90);
+  font-size: 0.81rem;
+  color: var(--neutral-blanco);
+}
+
+.divTablaParada {
+  width: 79.16%;
+  height: 18.3vh;
+  margin-left: 10.4%;
+  margin-top: 2.72%;
+  overflow: scroll;
+}
+
+.tablaParadas {
+  border-collapse: collapse;
+  vertical-align: auto;
+  width: 100%;
+  text-align: center;
+  color: var(--neutral-gris-oscuro);
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.columnaPParada {
+  width: 10%;
+}
+
+.columnaMParada {
+  width: 77.37%;
+  text-align: start;
+  padding: 13px 11px;
+}
+
+.eliminarParada {
+  background: none;
+  border: none;
+  color: var(--semantico-rojo);
+}
+
+.eliminarParada:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.atrasGuardarParada {
+  margin-left: 10.4%;
+  margin-top: 8.18%;
+  padding-bottom: 9.1%;
+  align-items: center;
+}
+
+.modalAtrasParada {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--neutral-gris);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  margin-right: 3.48%;
+  cursor: pointer;
+}
+
+.datosGuardarParada {
+  width: 41.94%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background-color: var(--primario);
+  font-size: 1rem;
+  color: var(--primario-10);
+  border: none;
+  cursor: pointer;
+}
+
+.datosGuardarParada:hover {
+  background: var(--primario-hover);
+}
+/*fin modal agregar parada*/

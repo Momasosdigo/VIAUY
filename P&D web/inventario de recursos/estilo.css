@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  /* ------- Fuentes ------- */
+  --fuente: Poppins, Sans-serif;
+
+  /* ------- Colores ------- */
+  --primario-10: #e8f0fd;
+  --primario-30: #8bb6f3;
+  --primario: #2e7dea;
+  --primario-hover: rgba(46, 123, 234, 0.8);
+  --primario-70: #104ca2;
+  --primario-90: #072046;
+  --neutral-blanco: #fff;
+  --neutral-negro: #0f1115;
+  --neutral-gris-claro-1: #f0f2f5;
+  --neutral-gris-claro-2: #d1d5da;
+  --neutral-gris: #949aa1;
+  --neutral-gris-oscuro: #50555c;
+  --semantico-verde: #97d92b;
+  --semantico-rojo: #ea433b;
+  --semantico-naranja: #fba33b;
+  --semantico-azul: #2e7bea;
+
+  /* ------- Efectos ------- */
+  --backgroundPrincipal: url(../img/fondoLogin.svg);
+  --borde: 0.2px solid rgba(0, 0, 0, 0.15);
+  --sombra: 0px 0px 4px 0px #d9d9d9;
+  --modal-blur: blur(6px);
+  --modal-background: #07204672;
+}
+
+h2 {
+    font-family: var(--fuente);
+    color: var(--primario-90);
+}
+
+p {
+    font-family: var(--fuente);
+    color: var(--primario-90);
+}
+
+.icon {
+    color: var(--primario-10);
+    font-size: 2rem;
+}
+
+.iconActivo {
+    font-size: 2rem;
+    color: var(--primario-30);
+}
+
+input {
+    padding: 7px 18px;
+    background-color: var(--neutral-gris-claro-1);
+    border: none;
+    color: var(--neutral-gris);
+    font-weight: 300;
+    border-radius: 7px;
+}
+
+.inputEnModal {
+    padding: 13px 11px;
+    background-color: var(--neutral-gris-claro-1);
+    border: none;
+    color: var(--neutral-gris);
+    border-radius: 7px;
+}
+
+.btnICG {
+    padding: 7px 18px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primario-10);
+    background: var(--primario);
+}
+
+.btnICG:hover {
+    background: var(--primario-hover);
+}
+
+.btnOscuro {
+    padding: 7px 18px;
+    border-radius: 7px;
+    background-color: var(--primario-90);
+    font-size: 1rem;
+    color: var(--primario-10);
+    border: none;
+    cursor: pointer;
+}
+
+.btnBorrar {
+    padding: 7px 18px;
+    border-radius: 7px;
+    background-color: var(--semantico-rojo);
+    font-size: 1rem;
+    color: var(--primario-10);
+    border: none;
+    cursor: pointer;
+}
+
+.btnAtras {
+    padding: 7px 18px;
+    border-radius: 7px;
+    background-color: var(--neutral-gris);
+    font-size: 1.06rem;
+    color: var(--primario-10);
+    border: none;
+    cursor: pointer;
+}
+  
+table {
+    width: 500px;
+    text-align: center;
+    color: var(--neutral-gris);
+    font-weight: 400;
+    font-size: 1rem;
+    font-family: var(--fuente);
+}
+
+tbody tr:nth-child(odd) {
+    background: var(--neutral-blanco);
+}
+  
+tbody tr:nth-child(even) {
+    background: var(--neutral-gris-claro-1);
+}
+  
+.filaTitulo {
+    color: var(--primario-90);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+  
+.filaTitulo td {
+    padding: 0.8%;
+}
+  
+.fila td {
+    padding: 0.8%;
+}
