@@ -38,7 +38,7 @@ function list () {
         echo -e "\n\e[0;33m\033[1m[+]========================================[+]\e[0m"
         echo -e "\e[0;33m\033[1m[+]\e[0m 1. Listar todos los Usuarios           \e[0;33m\033[1m[+]\e[0m"
         echo -e "\e[0;33m\033[1m[+]\e[0m 2. Listar todos los Grupos             \e[0;33m\033[1m[+]\e[0m"
-        echo -e "\e[0;33m\033[1m[+]\e[0m 3. Listar filtro de usarios por Grupos \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 3. Listar Grupos por Usuario \e[0;33m\033[1m[+]\e[0m"
         echo -e "\e[0;33m\033[1m[+]\e[0m 4. \033[0;101m\033[1;97mVolver\033[0m\t\t\t\t   \e[0;33m\033[1m[+]\e[0m"
         echo -e "\e[0;33m\033[1m[+]========================================[+]\e[0m"
         read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " listUser_Grup
@@ -62,7 +62,7 @@ function list () {
             ;;
 
             3)
-                read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desa ver en que grupos esta => ")" watchUsers
+                read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desea ver los grupos a los cuales pertenece => ")" watchUsers
                 groups "$watchUsers"
                 read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
                 echo
