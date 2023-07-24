@@ -38,7 +38,7 @@ function main() { clear
         # Crea una copia de seguridad de Shadow
         echo -e "\n\n[\033[1;93m Respaldo de Shadow en camino...\033[0m ]"
         sleep 1.5s
-        sudo rsync -rav /etc/shadow "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+        sudo rsync -rav /etc/shadow "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema y no se pudo realizar el respaldo...\033[0m ]"
     #        \________/
     #            /
     #   rsync sincronisa los datos de una carpeta a otra,
@@ -49,17 +49,17 @@ function main() { clear
         # Crea una copia de seguridad de Passw
         echo -e "\n\n[\033[1;93m Respaldo de Passwd en camino... \033[0m ]"
         sleep 1.5s
-        sudo rsync -rav /etc/passwd "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+        sudo rsync -rav /etc/passwd "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema y no se pudo realizar el respaldo...\033[0m ]"
 
         # Crea una copia de seguridad de Group
         echo -e "\n\n[\033[1;93m Respaldo de Group en camino... \033[0m ]"
         sleep 1.5s
-        sudo rsync -rav /etc/group "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema...\033[0m ]"
+        sudo rsync -rav /etc/group "$HOME"/SaveData_"$(date +%d-%m-%Y)"/ && echo -e "\n\n[ \033[1;32mRespaldo completado... \033[0m]" || echo -e "\n\n[ \033[4;91mOcurrio un problema y no se pudo realizar el respaldo...\033[0m ]"
 
         # Crea una copia de seguridad de BD
         echo -e "\n\n[\033[1;93m Respaldo de Base de Datos en camino... \033[0m ]"
         sleep 1.5s
-        mysqldump -u root -p Viauy > "$HOME"/Backup_BD_"$(date +%d-%m-%Y)".sql && echo -e "\n\n[ \033[1;32mRespaldo completado\033[0m ]" || echo -e "\n\n[ \033[4;91mOcurrio un problema\033[0m ]"
+        mysqldump -u root -p Viauy > "$HOME"/Backup_BD_"$(date +%d-%m-%Y)".sql && echo -e "\n\n[ \033[1;32mRespaldo completado\033[0m ]" || echo -e "\n\n[ \033[4;91mOcurrio un problema y no se pudo realizar el respaldo...\033[0m ]"
     #   \____________________________________________________________________/
     #                                  /        
     #                                 /
