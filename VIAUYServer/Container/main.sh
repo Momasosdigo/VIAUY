@@ -88,7 +88,7 @@ while [ "$op_central" != 6 ]; do
 
         *)
             clear
-            echo -e "\n\033[4;35mNo es una opcion lo que intentas\e[0m\n"
+            echo -e "\n\033[4;35mNo es una opcion valida lo que intentas\e[0m\n"
             sleep 2s
             clear
         ;;
