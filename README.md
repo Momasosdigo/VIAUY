@@ -7,27 +7,28 @@ Cabe aclarar que la ejecución del código debe ser utilizado *[ ./(Nombre_Scrip
 
 Todo empieza en este documento, la idea del mismo es hacer la instalación de los archivos necesarios para el funcionamiento correcto del servidor.
 
-Esto se hace mediante una comprobación de ruta de instalación `if [ ! -d "$dir" ]; then`, en la cual se comprueba si dicha carpeta propuesta por el usuario existe; de ser así, la instalación se llevará a cabo de manera directa. En caso contrario, se le solicitara al usuario la posibilidad de crear dicho documento de manera automática `mkdir "$dir"` y una vez creado, todo se moverán al directorio ya creado, se le dan los permisos pertinentes automáticamente y se lanzara el archivo **./main.sh** una vez finalizado el proceso.
+Esto se hace mediante una comprobación de ruta de instalación `if [ ! -d "$dir" ]; then`, en la cual se comprueba si dicha carpeta propuesta por el usuario existe; de ser así, la instalación se llevará a cabo de manera directa. En caso contrario, se le solicitara al usuario la posibilidad de crear dicho documento de manera automática `mkdir "$dir"` y una vez creado, todo se moverán al directorio ya creado, dandole los permisos pertinentes automáticamente y posteriormente se lanzara el archivo **./main.sh** una vez finalizado el proceso.
 
 >`cd "$dir"/Container/ && ( exec "./main.sh" )`  **=> Muestra a "./main.sh" sin necesidad de ir a la ruta en donde se encuentra.**
 
 ## ./main.sh
 
-Siendo desde aquí, que se conectara a los demás scripts los cuales por seguridad son archivos de texto plano, los cuales no cuentan con extensión de ningún tipo, ni permisos más que solo ***lectura y escritura***. Siendo así que no se podrán ejecutar de manera individual sin el archivo raíz (main) el cual funcionaria como llave, como, por ejemplo, lanzar alta de usuarios y grupos: `source scripts/alta` al hacerse desde la raíz, no es necesario contar con una extensión ni permisos extra.
+Siendo desde aquí, que se conectara a los demás scripts los cuales por seguridad son archivos de texto plano, los cuales no cuentan con extensión de ningún tipo, ni permisos más que solo ***lectura y escritura***. Para que así  no se puedan ejecutar de manera individual, sin el archivo raíz (main) el cual funcionaria como llave, como por ejemplo, lanzar alta de usuarios y grupos: `source scripts/alta` al hacerse desde la raíz, no es necesario contar con una extensión ni permisos extra.
 
 ## Carpeta *scripts*
 
-Aquí dentro es donde se encuentran todos los scripts necesarios, en los cuales se maneja el ABML (Alta, Baja, Modificación y Listado) del servidor, incluyendo un backup automático de los datos importantes, para en caso de suceder un problema se pueda solucionar de manera rápida.
+Aquí dentro es donde se encuentran todos los scripts necesarios, en los cuales se maneja ABML (Alta, Baja, Modificación y Listado) del servidor, incluyendo un backup automático de los datos importantes, para en caso de que suceda un problema se pueda solucionar de manera rápida.
 
 ### ABML
 
-- **Alta *usuario*:** Se encarga de dar de alta a un usuario creado directamente su directorio automáticamente, al igual que darle una terminal (bash predefinida por el servidor) y permitirle o no tener un grupo primario ya existente de así quererse.
+- **Alta *usuario*:** Se encarga de dar de alta a un usuario creando directamente su directorio, al igual que una terminal (bash predefinida por el servidor) y permitirle o no tener un grupo primario ya existente de así desearlo.
 
 >`sudo useradd -g "$primGroup" -m -d /home/"$nameUserChoice"/ -p "$passUser" -s /bin/bash "$nameUserChoice"`  **=> Crea el usuario con un nombre y un directorio personal. al igual que define su contraseña y se le asigna una terminal, incluyendo la posibilidad de tener un grupo primario.**
 
-- **Alta *grupos*:** A diferencia de alta de usuario es que aquí puedes dar de alta a un grupo y a su vez poder agregar un usuario existente a dicho grupo. La creación del mismo consiste en que se le dará un nombre, sin antes comprobar que dicho nombre no existe `if grep -q -E "^$nameGrup:" /etc/group; then` en caso de ser un nombre de grupo ya existente; se negará la creación del mismo. En caso contrario, se creará `sudo groupadd "$nameGrup"` y de esta manera el usuario podrá escoger entre agregar a algún usuario o no al mismo, sin antes comprobar que dicho usuario ya es existente en el servidor `if id "$nameUser" >/dev/null 2>&1; then` en caso de ser asi, se podrá agregar sin problemas `sudo groupadd "$nameGrup"`.
+- **Alta *grupos*:** A diferencia de alta de usuario es aquí puedes dar de alta un grupo y a su vez poder agregar un usuario existente a dicho grupo. La creación del mismo consiste en que se le dará un nombre, sin antes comprobar que dicho nombre no existe `if grep -q -E "^$nameGrup:" /etc/group; then` en caso de ser un nombre de grupo ya existente; se negará la creación del mismo. En caso contrario, se creará `sudo groupadd "$nameGrup"` y de esta manera el usuario podrá escoger entre agregar a algún usuario o no al mismo, sin antes comprobar que dicho usuario ya es existente en el servidor `if id "$nameUser" >/dev/null 2>&1; then` en caso de ser asi, se podrá agregar sin problemas `sudo groupadd "$nameGrup"`.
 
->`if id "$nameUser" >/dev/null 2>&1; then`  **=> Se le pide al servidor el id del usuario y se pasa por `>/dev/null 2>&1` para comprobar su existencia y esto redirigir los mensajes de error en caso de no existir hacia un dispositivo especial en el sistema (dev/null) que descarta la información. Y así de esta manera, se suprime la salida y los mensajes de error del comando en cuestión y podremos personalizar los nuestros propios en caso de así quererlo.**
+>`if id "$nameUser" >/dev/null 2>&1; then`  **=> Se le pide al servidor el id del usuario y se pasa por `>/dev/null 2>&1` para comprobar su existencia y
+asi redirigir los mensajes de error en caso de no existir hacia un dispositivo especial en el sistema (dev/null) que descarta la información. Y así de esta manera, se suprime la salida y los mensajes de error del comando en cuestión y podremos personalizar los nuestros propios en caso de así quererlo.**
 
 - **Baja *usuario*:** De ser necesario dar de bajá a un usuario por algún motivo, se podrá hacer sin problemas. En caso de ser un usuario existente se podrá quitar al usuario como su directorio personal. Para esto se valida su existencia `if id "$removedUsers" >/dev/null 2>&1; then`.
 
@@ -76,7 +77,7 @@ Para evitar problemas primero comprobamos la existencia del grupo `userList=$(gr
 
 ```
 
-- **Listado:** El listado del sistema mostrara tanto los usuarios, como los grupos incluyendo en poder ver en qué grupo puede estar un usuario en específico.
+- **Listado:** El listado del sistema mostrara tanto los usuarios, como los grupos, incluyendo el poder visualizar en qué grupo puede estar un usuario en específico.
 
 >`cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 ` **=> Muestra todos los usuarios con un [ id ] mayor a 1000, siendo estos aquellas cuentas reales del sistema.**
 
