@@ -167,14 +167,14 @@ function modGroup() { clear
             # Agregar usuarios al grupo primario si se proporcionan
             if [ -n "$addUsersPrimaryGroup" ]; then
                 for user in $addUsersPrimaryGroup; do
-                    sudo usermod -a -g "$newGroupName" "$user" && echo -e "\e[0;36m[+]\e[0m El usuarios [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$newGroupName"" ] al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n"
+                    sudo usermod -a -g "$newGroupName" "$user" && echo -e "\e[0;36m[+]\e[0m Los usuarios [ ""$user"" ] han sido \033[0;92mexitosamente\033[0m agregados al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$newGroupName"" ] al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n"
                 done
             fi
 
             # Agregar usuarios al grupo secundario si se proporcionan
             if [ -n "$addUsersSecondGroup" ]; then
                 for user in $addUsersSecondGroup; do
-                    sudo usermod -a -G "$newGroupName" "$user" && echo -e "\e[0;36m[+]\e[0m El usuarios [ ""$user"" ] ha sido \033[0;92mexitosamente\033[0m agregado al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$newGroupName"" ] al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n"
+                    sudo usermod -a -G "$newGroupName" "$user" && echo -e "\e[0;36m[+]\e[0m Los usuarios [ ""$user"" ] han sido \033[0;92mexitosamente\033[0m agregados al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n" || echo -e "\e[0;36m[+]\e[0m \033[46mNo se pudo agregar\033[0m al usuario [ ""$newGroupName"" ] al grupo [ ""$newGroupName"" ]\e[0;36m[+]\e[0m\n"
                 done
             fi
         elif [[ "$nameUserChoice" == [Nn] ]]; then
