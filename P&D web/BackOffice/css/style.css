@@ -1,0 +1,178 @@
+body {
+  background-image: var(--backgroundPrincipal);
+  background-color: var(--neutral-gris-claro-1);
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: var(--fuente);
+  margin: 0;
+}
+
+.divPrincipal {
+  width: 100%;
+}
+
+.nav {
+  width: 100%;
+  height: 5vh;
+}
+
+.content {
+  width: 100%;
+}
+
+/*idioma*/
+.idioma {
+  width: 4rem;
+  margin-left: 85%;
+  padding-top: 2%;
+}
+
+.dropdown {
+  display: inline-block;
+  width: 100%;
+}
+
+.dropdown .dropbtn {
+  border: none;
+  background-color: inherit;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 4rem;
+  overflow: auto;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(46, 123, 234);
+}
+/*fin idioma*/
+
+/*login*/
+
+.formLogin {
+  margin-left: 36.46%;
+  padding-top: 25.17vh;
+  width: 24.24%;
+}
+
+.login {
+  width: 100%;
+  height: 100%;
+  background-color: var(--primario-90);
+  border-radius: 20px;
+  border: var(--borde);
+}
+
+.logo {
+  width: 57.3%;
+  height: 70px;
+  margin-top: 13%;
+  margin-left: 21.48%;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 11.79%;
+}
+
+.iconPerson {
+  width: 19px;
+  height: 19px;
+  font-size: 19px;
+  color: var(--primario-10);
+}
+
+.txtUser {
+  border: none;
+  border-radius: 7px;
+  width: 71.34%;
+  padding: 7px 18px;
+  background-color: var(--neutral-gris-claro-1);
+  margin-left: 11px;
+}
+
+.pass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3.19%;
+}
+
+.iconCandado {
+  height: 19px;
+  width: 19px;
+  font-size: 19px;
+  color: var(--primario-10);
+}
+
+.txtPass {
+  border: none;
+  border-radius: 7px;
+  width: 71.34%;
+  padding: 7px 18px;
+  background-color: var(--neutral-gris-claro-1);
+  margin-left: 11px;
+}
+
+.divIniciar {
+  height: 8.8%;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.iniciar {
+  width: 100%;
+  padding: 7px 18px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--neutral-blanco);
+  font-weight: 600;
+  background: var(--primario);
+  margin-top: 6.14%;
+  padding: 7px 0px;
+}
+
+.iniciar:hover {
+  background: var(--primario-hover);
+}
+
+.restablecerC {
+  text-align: center;
+  height: 5.1%;
+  margin-top: 5.5%;
+}
+
+.restablecerC a {
+  font-size: 14px;
+  color: var(--neutral-gris-claro-2);
+  line-height: 21px;
+  font-weight: 300;
+  font-style: normal;
+  text-decoration: none;
+}
+
+.error {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--semantico-rojo);
+  margin-top: 3%;
+  margin-bottom: 4%;
+}
