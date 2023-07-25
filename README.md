@@ -3,6 +3,20 @@
 Muy buenas, este documento le será de ayuda para comprender todo lo que vendrá a continuación dentro del servidor.
 Cabe aclarar que la ejecución del código debe ser utilizado *[ ./(Nombre_Script).sh ]* evitando la necesidad de una ejecución con altos privilegios como *[ bash ./(Nombre_Script).sh ]* o forzando la ejecución con *[ sudo ./(Nombre_Script).sh ]*.
 
+# Login del servidor
+#### Inicio como Administrador
+- Usuario: admin
+- Pass: LoremIpsum
+
+#### Inicio como root
+- Usuario: root
+- Pass: fatiga (Si, como en "Casado con hijos")
+
+#### Visualizar la base de datos en MySQL
+- MySQL:
+- Usuario: root
+- Pass: VIAUYServer
+
 ## Archivo Install-Me
 
 Todo empieza en este documento, la idea del mismo es hacer la instalación de los archivos necesarios para el funcionamiento correcto del servidor.
