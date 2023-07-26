@@ -5,7 +5,7 @@
   $lang['banderaIdioma'] = "img/flags/eng.png";
   $lang['lang-eng'] = 'English';
   $lang['lang-esp'] = 'Español';
-  
+   
   //barra lateral
   $lang['bLInicio'] = 'Home';
   $lang['bLRutas'] = 'Routes';
