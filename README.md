@@ -3,7 +3,12 @@
 Muy buenas, este documento le será de ayuda para comprender todo lo que vendrá a continuación dentro del servidor.
 Cabe aclarar que la ejecución del código debe ser utilizado *[ ./(Nombre_Script).sh ]* evitando la necesidad de una ejecución con altos privilegios como *[ bash ./(Nombre_Script).sh ]* o forzando la ejecución con *[ sudo ./(Nombre_Script).sh ]*.
 
+# Descargar servidor funcional en formato **`.OVA`**
+
+Puede descargarse fácilmente desde [Drive](https://drive.google.com/drive/u/2/folders/1XLk9CbfTIuEsDqetKpvKA19bedc56nEh), el cual necesita de una máquina virtual, en este caso [VirtualBox](https://www.virtualbox.org/), en el cual una vez descargado él `.OVA` solo es cuestión de hacer doble click en él, y se cargara de manera automática en VirtualBox. 
+
 # Login del servidor
+
 #### Inicio como Administrador
 - Usuario: admin
 - Pass: LoremIpsum
@@ -16,6 +21,7 @@ Cabe aclarar que la ejecución del código debe ser utilizado *[ ./(Nombre_Scrip
 - MySQL:
 - Usuario: root
 - Pass: VIAUYServer
+
 
 ## Archivo Install-Me
 
