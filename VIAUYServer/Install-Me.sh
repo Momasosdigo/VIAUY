@@ -1,14 +1,5 @@
 #!/bin/bash
 clear
-
-###########
-## ALIAS
-#[+][+][+]#
-
-echo "alias install='$HOME/VIAUYServer/./Install-Me.sh'" > ~/.bashrc
-
-#[+][+][+][+][+][+][+][+][+][+][+][+]#
-
 #############################
 ## Zona de auto debugging ##
 #[+][+][+][+][+][+][+][+][+][+][+][+]#
