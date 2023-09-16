@@ -110,6 +110,16 @@ input {
     border: none;
     cursor: pointer;
 }
+
+.btnContinuar {
+    padding: 7px 18px;
+    border-radius: 7px;
+    background-color: var(--semantico-naranja);
+    font-size: 1.06rem;
+    color: var(--primario-10);
+    border: none;
+    cursor: pointer;
+}
   
 table {
     width: 500px;
@@ -140,4 +150,8 @@ tbody tr:nth-child(even) {
   
 .fila td {
     padding: 0.8%;
+}
+
+.indicador {
+    width: 400px;
 }
