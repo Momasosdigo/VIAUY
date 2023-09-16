@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VIAUY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header class="primary-header">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="#"><img class="logo" src="img/logo-viauy.svg" alt="" /></a>
+          <nav class="primary-nav">
+            <ul class="nav-list">
+              <li><a href="#">Español</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="container">
+          <div class="even-colums">
+            <div>
+              <h1 class="fs-900 fw-bold text-primary-500 | titulo">
+                Compra tus pasajes online
+              </h1>
+              <p class="sub-titulo | fs-700 fw-semi-bold text-neutral-400">
+                FACIL, RAPIDO Y SEGURO
+              </p>
+            </div>
+            <div class="bus">
+              <img src="img/bus.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="form__1">
+        <div class="container">
+          <form class="form-1" action="" id="formularioBuscar">
+            <div class="form-item">
+              <div>
+                <label class="fw-bold fs-400" for="">ORIGEN</label>
+              </div>
+              <div>
+                <select name="origen" id="origen" required>
+                  <option value="0" disabled>Selecciona origen</option>
+                  <option value="1">Montevideo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div>
+                <label class="fw-bold fs-400" for="">DESTINO</label>
+              </div>
+              <div>
+                <select name="destino" id="destino" required>
+                  <option value="0" selected disabled>
+                    Selecciona Destino
+                  </option>
+                  <option value="2">Montevideo</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div><label class="fw-bold fs-400" for="">FECHA</label></div>
+              <div>
+                <input type="date" id="fecha-salida" name="salida" required />
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <label class="fw-bold fs-400" for="">FECHA VUELTA</label>
+              </div>
+              <div><input type="date" id="fecha-salida" name="vuelta" /></div>
+            </div>
+
+            <div>
+              <div>
+                <label class="fw-bold fs-400" for="">PASAJEROS</label>
+              </div>
+              <div>
+                <select name="pasajeros" id="pasajeros">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="1">3</option>
+                  <option value="1">4</option>
+                  <option value="1">5</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="siguientePag()" value="submit">BUSCAR</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="form__2">
+        <div class="container">
+          <form class="form-2" action="" id="formularioBuscar">
+            <div>
+              <div class="selector">
+                <label class="label-1">FECHA VUELTA</label>
+                <select name="origen" id="origen" class="selector__item">
+                  <option value="0" disabled>Selecciona origen</option>
+                  <option value="1">Montevideo</option>
+                </select>
+              </div>
+              <div class="selector">
+                <label class="label-1">FECHA VUELTA</label>
+                <select name="origen" id="origen" class="selector__item">
+                  <option value="0" disabled>Selecciona origen</option>
+                  <option value="1">Montevideo</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="label-1">FECHA VUELTA</label>
+              <div class="fecha">
+                <input
+                  class="fecha__item"
+                  type="date"
+                  id="fecha-salida"
+                  name="vuelta"
+                />
+              </div>
+              <label class="label-1">FECHA VUELTA</label>
+
+              <div class="fecha">
+                <input
+                  required
+                  class="fecha__item"
+                  type="date"
+                  id="fecha-salida"
+                  name="vuelta"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <label class="label-1">PASAJEROS</label>
+              </div>
+              <div class="fecha">
+                <select class="selector__item" name="pasajeros" id="pasajeros">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="1">3</option>
+                  <option value="1">4</option>
+                  <option value="1">5</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="siguientePag()" value="submit">BUSCAR</button>
+          </form>
+        </div>
+      </section>
+
+      <section>
+        <div class="container-2">
+          <div
+            style="
+              border: solid rgba(128, 128, 128, 0.456) 0.5px;
+              padding: 10px;
+              border-radius: 7px;
+            "
+          >
+            <div class="even-colums">
+              <div style="display: flex; align-items: start">
+                <img class="test" src="img/panel.png" alt="" srcset="" />
+                <div>
+                  <p class="fs-600 fw-semi-bold text-primary-500">
+                    Disponivilidad de destinos
+                  </p>
+                  <p class="fs-400 text-neutral-500 fw-regular">
+                    Contamos con la mayor cobertura de destinos del país.
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: start">
+                <img class="test" src="img/money.png" alt="" srcset="" />
+                <div>
+                  <p class="fs-600 fw-semi-bold text-primary-500">
+                    Precios accesibles
+                  </p>
+                  <p class="fs-400 text-neutral-500 fw-regular">
+                    Disponemos los mejores precios del sector.
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: start">
+                <img class="test" src="img/support.png" alt="" srcset="" />
+                <div>
+                  <p class="fs-600 fw-semi-bold text-primary-500">
+                    Soporte eficiente
+                  </p>
+                  <p class="fs-400 text-neutral-500 fw-regular">
+                    Contamos con un excelente personal para resolver tus dudas.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-neutral-400 fw-medium fs-400">
+      <div class="container">
+        <div class="even-colums">
+          <div class="social-icons">
+            <img src="img/icon-facebook.svg" alt="" />
+            <img src="img/icon-instagram.svg" alt="" />
+            <a>contacto@viauy.com</a>
+            <a> - </a>
+            <a>092 123 321</a>
+          </div>
+          <div class="derechos">
+            <a>© 2023 VIAUY. Todos los derechos reservados</a>
+          </div>
+          <div class="camel-code">
+            <a>Desarrollado por</a>
+            <img src="img/logo-camelCode.svg" alt="" />
+            <ul role="list" aria-label="Social links">
+              <li><a href="#"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
