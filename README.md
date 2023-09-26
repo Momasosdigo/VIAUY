@@ -22,6 +22,9 @@ Puede descargarse fácilmente desde [Drive](https://drive.google.com/drive/u/2/f
 - Usuario: root
 - Pass: VIAUYServer
 
+## Alias utilizando
+- Instalación: Install
+- Llamado del main: main
 
 ## Archivo Install-Me
 
