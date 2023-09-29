@@ -106,8 +106,10 @@ CREATE TABLE pasa(
     horaPasa time NOT NULL,
     nombreLineaPasa VARCHAR(10) NOT NULL,
     idParadaPasa INT(10) NOT NULL,
-    PRIMARY KEY (nombreLineaPasa, idParadaPasa, horaPasa),
+    matriculaPasa VARCHAR(10) NOT NULL,
+    PRIMARY KEY (idParadaPasa, horaPasa, matriculaPasa),
     CONSTRAINT FOREIGN KEY (nombreLineaPasa) REFERENCES linea(nombreLinea) ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (matriculaPasa) REFERENCES omnibus(matricula) ON UPDATE CASCADE,
     CONSTRAINT FOREIGN KEY (idParadaPasa) REFERENCES parada(idParada) ON UPDATE CASCADE
 ); 
 
