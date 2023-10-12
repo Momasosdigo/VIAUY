@@ -47,7 +47,7 @@ function list () {
         case "${listUser_Grup}" in
             1)
                 echo -e "\n\e[0;36m[+]\e[0m Usuarios del sitema:"
-                cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 | more
+                cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 | less
             #   \____________________________________________________________/
             #                               /
             # Muestra a todos los usurios con un ID mayot a 1000, mediante el comaando 
@@ -63,7 +63,7 @@ function list () {
 
             2)
                 echo -e "\n\e[0;36m[+]\e[0m Grupos del sitema:"
-                cut -d: -f1,3 /etc/group | grep -E ':[0-9]{4}$' | cut -d: -f1 | more
+                cut -d: -f1,3 /etc/group | grep -E ':[0-9]{4}$' | cut -d: -f1 | less
             #   \___________________________________________________________/
             #                               /
             # De igual forma que el fitro anterior, aqui se mostraran los grupos 
