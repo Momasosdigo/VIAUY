@@ -5,27 +5,27 @@
 #[+][+][+][+][+][+][+][+][+][+][+][+]#
 handleError() {
     echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
-    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA ""$1""; Script error ""$0""" 
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA ""$1""; Script error ""$0"""
     #                           \__________________________________________/
     #                                               /
     #                                              /
-    #       Esta línea muestra el mensaje de error principal. El número de línea 
+    #       Esta línea muestra el mensaje de error principal. El número de línea
     #       del error [ $1 ] y el nombre del script [ $0 ] se muestran en el mensaje de error.
-    
+
     echo -e "\033[1;31m[+]\e[0m [Codigo error ""$2"" ]"
     #                           \____________________/
     #                                     /
     #    Se muestra el código de error con el argumento [ $2 ] que causó el problema.
-    
+
     echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
     exit  1 # Sale del script penas se detecta el error.
 }
 trap 'handleError ""$LINENO"" ""$?""' ERR
 #                 \_________________/
-#                          /  
+#                          /
 # Cuando el error cae en [ trap ], [ $LINENO ] representa el número de línea donde se produjo
-# el error y [ $? ] representa el código de salida del último comando ejecutado. 
-# Cuando un comando termina con éxito, [ $? ] es 0, de lo contrario, tendrá un valor 
+# el error y [ $? ] representa el código de salida del último comando ejecutado.
+# Cuando un comando termina con éxito, [ $? ] es 0, de lo contrario, tendrá un valor
 # diferente y se mostrara el código de error.
 
 trap "echo [x] Que forma más arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
@@ -49,7 +49,7 @@ function iYd() { clear
                 [ "$op_iYd" = true ]
                 clear
             ;;
-            
+
             2) sleep 1s
                 echo -e "\n\033[1;31m[+]\e[0m Para cerrar procesos necesitas su \e[1;32m[ PID ]\e[0m (Process Indentifiers)"
                 read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " pid
@@ -135,7 +135,8 @@ function sql() { clear
 
             6)
                 unset "$op_sql"
-                clear && source met 
+                clear
+                ( exec "./main.sh" ) 
             ;;
 
             *)
@@ -144,7 +145,8 @@ function sql() { clear
                 echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
                 echo
                 sleep 2s
-                clear && source met 
+                clear
+                ( exec "./met.sh" )
             ;;
         esac
     done
@@ -181,8 +183,7 @@ function tarea() { clear
                 read -r -p "=> " name
                 top -u "$name"
                 read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..." tar
-                clear && source met 
-                clear
+                ( exec "./met.sh" )
             ;;
 
             3) sleep 1s
@@ -251,8 +252,8 @@ function tarea() { clear
 
                         6)
                             read -r -p "Presione enter para [ VOLVER ]..." tar
-                            clear && source met 
-                            clear
+                            clear 
+                            ( exec "./main.sh" )
                         ;;
 
                         *)
@@ -270,7 +271,8 @@ function tarea() { clear
             6)
                 unset "$tar"
                 unset "$tar2"
-                clear && source met 
+                clear 
+                ( exec "./main.sh" )
             ;;
 
             *)
@@ -279,7 +281,8 @@ function tarea() { clear
                 echo -e "\033[4;35mNo es una opcion lo que intentas\e[0m"
                 echo
                 sleep 2s
-                clear && source met 
+                clear
+                ( exec "./main.sh" )
             ;;
         esac
     done
