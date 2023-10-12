@@ -70,14 +70,15 @@ function iYd() { clear
                 unset "$op_iYd"
                 unset "$pid"
                 unset "$tar"
-                clear && source met 
+                ( exec "./main.sh" )
             ;;
 
             *)
                 clear
                 echo -e "\n\033[4;35mNo es una opcion lo que intentas\e[0m\n"
                 sleep 2s
-                clear && source met 
+                clear
+                ( exec "./main.sh" )
             ;;
         esac
    done
