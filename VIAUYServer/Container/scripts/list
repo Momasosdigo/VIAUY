@@ -1,0 +1,137 @@
+#!/bin/bash
+
+#############################
+## Zona de auto debugging ##
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+handleError() {
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    echo -e "\033[1;31m[+]\e[0m [ERROR]=> LINEA ""$1""; Script error ""$0""" 
+    #                           \__________________________________________/
+    #                                               /
+    #                                              /
+    #       Esta línea muestra el mensaje de error principal. El número de línea 
+    #       del error [ $1 ] y el nombre del script [ $0 ] se muestran en el mensaje de error.
+    
+    echo -e "\033[1;31m[+]\e[0m [Codigo error ""$2"" ]"
+    #                           \____________________/
+    #                                     /
+    #    Se muestra el código de error con el argumento [ $2 ] que causó el problema.
+    
+    echo -e "\033[1;31m[+]\e[0m\e[0;36m================================================\e[0m\033[1;31m[+]\e[0m"
+    exit  1 # Sale del script penas se detecta el error.
+}
+trap 'handleError ""$LINENO"" ""$?""' ERR
+#                 \_________________/
+#                          /  
+# Cuando el error cae en [ trap ], [ $LINENO ] representa el número de línea donde se produjo
+# el error y [ $? ] representa el código de salida del último comando ejecutado. 
+# Cuando un comando termina con éxito, [ $? ] es 0, de lo contrario, tendrá un valor 
+# diferente y se mostrara el código de error.
+
+trap "echo [x] Que forma más arcaica de salir, se implementaron funciones modernas para ello [x]; exit" SIGINT
+# [ SIGINT ]: Proporciona un mensaje de advertencia cuando el usuario intenta
+# salir del script usando [ Ctrl+C ] luego finaliza el script con [ exit ].
+#[+][+][+][+][+][+][+][+][+][+][+][+]#
+
+function list () {
+    while [ "$listUser_Grup" != 4 ]; do
+        echo -e "\n\e[0;33m\033[1m[+]===============================[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 1. Listar todos los Usuarios  \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 2. Listar todos los Grupos    \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 3. Listar Usuarios por Grupos \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]\e[0m 4. \033[0;101m\033[1;97mVolver\033[0m\t\t\t  \e[0;33m\033[1m[+]\e[0m"
+        echo -e "\e[0;33m\033[1m[+]===============================[+]\e[0m"
+        read -r -p "$(echo -e "\e[0;33m\033[1m[+]\e[0m") => " listUser_Grup
+        echo
+
+        case "${listUser_Grup}" in
+            1)
+                echo -e "\n\e[0;36m[+]\e[0m Usuarios del sitema:"
+                cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1 | less
+            #   \____________________________________________________________/
+            #                               /
+            # Muestra a todos los usurios con un ID mayot a 1000, mediante el comaando 
+            # [ -E ':[0-9]{4}$' ] siendo que [ -E ] nos permitira usar expreciones regulares 
+            # Para un mejor fitrado, utilizando [ ':[0-9]{4}$' ] busca una línea que termina 
+            # con cuatro dígitos después de un dos puntos con la ayuda del simbolo [ $ ] el
+            # cual representa el final de la misma. Esto nos devuelve el nombre de usuario y 
+            # el tercer campo cual es ID de usuario de cada registro en el archivo [ /etc/passwd ].
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+            ;;
+
+            2)
+                echo -e "\n\e[0;36m[+]\e[0m Grupos del sitema:"
+                cut -d: -f1,3 /etc/group | grep -E ':[0-9]{4}$' | cut -d: -f1 | less
+            #   \___________________________________________________________/
+            #                               /
+            # De igual forma que el fitro anterior, aqui se mostraran los grupos 
+            # con un ID mayor a 1000 dentro del archivo [ /etc/group ].
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+            ;;
+
+            3)
+                read -r -p "$(echo -e "\e[0;36m[+]\e[0m Nombre del usuario que desea ver los grupos a los cuales pertenece => ")" watchUsers
+                if ! [[ "$watchUsers" =~ ^[a-zA-Z0-9_]+$ ]]; then
+                #  \_____________________________________/
+                #                  /
+                #                 /
+                # Se utiliza esa seccion para asegurarse de que el nombre de [ $watchUsers ] solo contenga caracteres alfanuméricos y guiones bajos, 
+                # evitando que haya otros caracteres especiales o espacios creando un conficto en el servidor.
+                # Cabe aclarar que la seccion de [ [a-zA-Z0-9_]+ ] representa un conjunto de caracteres que puede contener letras mayúsculas y minúsculas 
+                # (Osea: a-z y A-Z), al igual que números y tambien guiones bajos [ _ ] de querese, de igual manera el símbolo de [ + ] indica 
+                # que esta secuencia de caracteres debe estar presente al menos una vez y el simbolo [ $ ] indica el fin dle texto.
+                    echo -e "\e[0;31m[ERROR]\e[0m El nombre de usuario no es válido, solo letras y numeros"
+                    read -n1 -p "Presione cualquier tecla para [ VOLVER ]..."
+                    return
+                fi 
+
+                if id "$watchUsers" >/dev/null 2>&1; then
+                #                 \_____________/
+                #                        |
+                #                       |
+                #   Se utiliza [ >/dev/null 2>&1 ] para redirigir los mensajes de error del
+                #   comando hacia un dispositivo especial en el sistema que descarta la
+                #   información. Y asi de esta manera, se suprime la salida y los mensajes
+                #   de error del comando en cuestión. Asi nosotros podremos personalizar
+                #   los nuestros.
+                groups "$watchUsers" | more
+                read -n1 -p "Presione cualquier tecla para [ CONTINUAR ]..."
+                echo
+                clear
+                else
+                    echo -e "\n\033[4;35mEl usuario no existe\e[0m"
+                    read -n1 -p "Presione cualquier tecla para [ VOLVER ]..."
+                    clear
+                    return
+                fi
+            ;;
+
+            4)
+                unset "$listUser_Grup" #[ unset ] borra la variable en memoria al salir de la funcion. 
+                unset "$watchUsers"
+                ( exec "./main.sh" )
+            #   \_________________/
+            #            |
+        # Con el comando [ exec ] reemplaza al Shell sin crear un nuevo proceso. 
+        # Sin embargo, podemos ponerlo en una SubShell, la cual usara 
+        # un porcentaje de procesador y ram, para usar esto es 
+        # quitando el comando [ exec ] y dejando solo los paréntesis y el path del main:
+        # [ ( "./main.sh" ) ].
+        # (La segunda opción es buena idea usarla en caso que se dese ejecutar tareas pesadas)
+            ;;
+
+            *)
+                clear
+                echo -e "\n\033[4;35mNo es una opcion lo que intentas\e[0m"
+                sleep 2s
+                clear
+            ;;
+        esac
+    done
+}
+
+list
